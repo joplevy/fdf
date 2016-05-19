@@ -13,7 +13,7 @@
 NAME = fdf
 CC = gcc
 CFLAG = -c -Wall -Werror -Wextra
-SRC_NAME = 
+SRC_NAME = main.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 LIBFT_PATH = ./libft/
 LIBFT_NAME = libft.a
@@ -22,9 +22,9 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME):
-	@$(MAKE) -C $(LIBFT_PATH)
-	@$(CC) $(CFLAGS) $(SRC_NAME)
-	@$(CC) $(OBJ_NAME) -L. $(LIBFT_PATH)$(LIBFT_NAME) -o $(NAME)
+	$(MAKE) -C $(LIBFT_PATH)
+	$(CC) $(CFLAG) $(SRC_NAME)
+	$(CC) -o $(NAME) $(OBJ_NAME) -L. $(LIBFT_PATH)$(LIBFT_NAME) -lmlx -framework OpenGL -framework AppKit
 clean:
 	@$(MAKE) -C $(LIBFT_PATH) clean
 	@$(RM) $(OBJ_NAME)
