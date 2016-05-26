@@ -17,16 +17,23 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <X11/Xlib.h>
 # include <mlx.h>
 # include <float.h>
 # include <math.h>
 
 typedef struct	s_coord
 {
-	float			x;
-	float			y;
-	float			z;
+	int			x;
+	int			y;
+	int			z;
 }				t_coord;
 
-void	ft_draw_line(void *mlx, void *win, t_coord p1, t_coord p2);
+typedef struct	s_point
+{
+	double		x;
+	double		y;
+}				t_point;
+
+void	ft_draw_line(void *mlx, void *win, t_point p1, t_point p2);
 #endif
