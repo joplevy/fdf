@@ -13,7 +13,7 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-int		ft_indexof(char *str)
+int			ft_indexof(char *str)
 {
 	int		i;
 
@@ -27,7 +27,7 @@ int		ft_indexof(char *str)
 	return (-2);
 }
 
-int		get_chars(char *buff, char **str)
+int			get_chars(char *buff, char **str)
 {
 	char	*tmp;
 
@@ -41,7 +41,7 @@ int		get_chars(char *buff, char **str)
 	return (ft_indexof(*str));
 }
 
-int		ft_result(char **line, char **str, int n)
+int			ft_result(char **line, char **str, int n)
 {
 	char	*tmp;
 
@@ -86,7 +86,7 @@ t_list_fd	*ft_fd_finder(t_list_fd **mem, int fd)
 	return (tmp1);
 }
 
-int		get_next_line(int const fd, char **line)
+int			get_next_line(int const fd, char **line)
 {
 	int					i;
 	int					j;

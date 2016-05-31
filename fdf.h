@@ -17,7 +17,6 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <X11/Xlib.h>
 # include <mlx.h>
 # include <float.h>
 # include <math.h>
@@ -35,5 +34,12 @@ typedef struct	s_point
 	double		y;
 }				t_point;
 
-void	ft_draw_line(void *mlx, void *win, t_point p1, t_point p2);
+void			ft_draw_line(void *mlx, void *win, t_point p1, t_point p2);
+void			ft_get_coord(char *line, int y, t_list **map);
+t_list			*ft_get_map(char *input);
+t_point			ft_get_point(t_coord *data, t_coord max);
+t_point			**ft_tab(t_list *map, t_coord max);
+t_coord			ft_get_max(t_list *map);
+void			ft_draw_line(void *mlx, void *win, t_point p1, t_point p2);
+void			ft_draw(t_point **tab, t_coord max);
 #endif

@@ -27,9 +27,9 @@ typedef struct			s_list_fd
 	struct s_list_fd	*next;
 }						t_list_fd;
 
-int					ft_indexof(char *str);
-int					get_chars(char *buff, char **str);
-int					ft_result(char **line, char **str, int n);
-int					get_next_line(int const fd, char **line);
-t_list_fd			*ft_fd_finder(t_list_fd **mem, int fd);
+int						ft_indexof(char *str);
+int						get_chars(char *buff, char **str);
+int						ft_result(char **line, char **str, int n);
+int						get_next_line(int const fd, char **line);
+t_list_fd				*ft_fd_finder(t_list_fd **mem, int fd);
 #endif
