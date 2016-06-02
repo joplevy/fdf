@@ -12,6 +12,13 @@
 
 #include "fdf.h"
 
+int		my_key_func(int keycode, void *param)
+{
+	if (keycode == 53 && param == 0)
+		exit(0);
+	return (0);
+}
+
 void	ft_draw_line(void *mlx, void *win, t_point p1, t_point p2)
 {
 	float	e;
@@ -35,6 +42,17 @@ void	ft_draw_line(void *mlx, void *win, t_point p1, t_point p2)
 	}
 }
 
+t_coord	*ft_max_point(t_coord max)
+{
+	t_coord	*ret;
+
+	ret = malloc(sizeof(t_coord));
+	ret->x = max.x;
+	ret->z = max.z;
+	ret->y = 0;
+	return (ret);
+}
+
 void	ft_draw(t_point **tab, t_coord max)
 {
 	void	*mlx;
@@ -43,7 +61,7 @@ void	ft_draw(t_point **tab, t_coord max)
 	int		x;
 
 	mlx = mlx_init();
-	win = mlx_new_window(mlx, 600, 600, "fdf");
+	win = mlx_new_window(mlx, 1600, 800, "fdf");
 	y = -1;
 	while (++y <= max.y)
 	{
@@ -56,5 +74,6 @@ void	ft_draw(t_point **tab, t_coord max)
 				ft_draw_line(mlx, win, tab[y][x], tab[y - 1][x]);
 		}
 	}
+	mlx_key_hook(win, my_key_func, 0);
 	mlx_loop(mlx);
 }

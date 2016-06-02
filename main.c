@@ -12,11 +12,30 @@
 
 #include "fdf.h"
 
+t_point	ft_get_scale(float *scale, t_coord max)
+{
+	t_point	l;
+	t_coord	*maxp;
+
+	*scale = 0;
+	l.x = 0;
+	l.y = 0;
+	maxp = ft_max_point(max);
+	while (ft_get_point(maxp, max, *scale + 1, l).x < 1500 && \
+		ft_get_point(maxp, max, *scale + 1, l).y > -700)
+		*scale = *scale + 1;
+	l.x = (1600 - ft_get_point(maxp, max, *scale + 1, l).x) / 2;
+	l.y = 800 - (800 + ft_get_point(maxp, max, *scale + 1, l).y) / 2;
+	return (l);
+}
+
 int		main(int ac, char **av)
 {
 	t_list	*map;
 	t_point	**tab;
 	t_coord	max;
+	t_point	l;
+	float	scale;
 
 	map = NULL;
 	if (ac != 2)
@@ -27,9 +46,12 @@ int		main(int ac, char **av)
 		if (map)
 		{
 			max = ft_get_max(map);
-			tab = ft_tab(map, max);
+			l = ft_get_scale(&scale, max);
+			tab = ft_tab(map, max, scale, l);
 			ft_draw(tab, max);
 		}
+		else
+			ft_putstr("error\n");
 	}
 	return (0);
 }

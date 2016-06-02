@@ -12,20 +12,21 @@
 
 #include "fdf.h"
 
-void	ft_get_coord(char *line, int y, t_list **map)
+int		ft_get_coord(char *line, int y, t_list **map, int x)
 {
-	t_coord	c;
-	char	**tab;
+	t_coord		c;
+	char		**tab;
 
 	c.x = -1;
 	c.y = y;
 	tab = ft_strsplit(line, ' ');
-	while (tab[++(c.x)])
+	while (tab[++(c.x)] && (x == 0 || c.x < x))
 	{
 		c.z = ft_atoi(tab[c.x]);
 		ft_lstadd(map, ft_lstnew(&c, sizeof(c)));
 	}
 	free(tab);
+	return (c.x);
 }
 
 t_list	*ft_get_map(char *input)
@@ -33,28 +34,33 @@ t_list	*ft_get_map(char *input)
 	int		fd;
 	t_list	*ret;
 	char	*line;
-	int		y;
+	t_coord	c;
 
-	y = 0;
+	c.y = 0;
+	c.x = 0;
 	ret = NULL;
 	fd = open(input, O_RDONLY);
+	get_next_line(fd, &line);
+	c.x = ft_get_coord(line, c.y++, &ret, c.x);
 	while (get_next_line(fd, &line) > 0)
-		ft_get_coord(line, y++, &ret);
+		if (ft_get_coord(line, c.y++, &ret, c.x) < c.x)
+			return (NULL);
 	close(fd);
 	return (ret);
 }
 
-t_point	ft_get_point(t_coord *data, t_coord max)
+t_point	ft_get_point(t_coord *data, t_coord max, double scale, t_point l)
 {
 	t_point	ret;
 
-	ret.x = ((double)data->x + cos(45) * (max.y - (double)data->y)) * 20;
-	ret.y = 500 - (((double)data->z + sin(45) *\
-		(max.y - (double)data->y)) * 20);
+	ret.x = l.x + ((double)data->x + cos(45) * \
+		(max.y - (double)data->y)) * scale;
+	ret.y = l.y - (((double)data->z + sin(45) *\
+		(max.y - (double)data->y)) * scale);
 	return (ret);
 }
 
-t_point	**ft_tab(t_list *map, t_coord max)
+t_point	**ft_tab(t_list *map, t_coord max, double scale, t_point l)
 {
 	t_list	*tmp;
 	t_coord	*data;
@@ -71,7 +77,7 @@ t_point	**ft_tab(t_list *map, t_coord max)
 	while (tmp)
 	{
 		data = tmp->content;
-		ret[data->y][data->x] = ft_get_point(data, max);
+		ret[data->y][data->x] = ft_get_point(data, max, scale, l);
 		tmp = tmp->next;
 	}
 	return (ret);
