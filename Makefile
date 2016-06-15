@@ -24,7 +24,9 @@ all: $(NAME)
 $(NAME):
 	@$(MAKE) -C $(LIBFT_PATH)
 	@$(CC) $(CFLAG) $(SRC_NAME)
-	@$(CC) -o $(NAME) $(OBJ_NAME) -L. $(LIBFT_PATH)$(LIBFT_NAME) -lmlx -framework OpenGL -framework AppKit
+	@$(CC) -o $(NAME) $(OBJ_NAME) -L. $(LIBFT_PATH)$(LIBFT_NAME) \
+	-lmlx -L/usr/include/../lib -lXext -lX11 -lm
+	@#-lmlx -framework OpenGL -framework AppKit
 
 clean:
 	@$(MAKE) -C $(LIBFT_PATH) clean

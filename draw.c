@@ -19,6 +19,20 @@ int		my_key_func(int keycode, void *param)
 	return (0);
 }
 
+void	ft_swap_point(t_point *a, t_point *b)
+{
+	t_point	*tmp;
+
+	tmp = malloc(sizeof(t_point));
+	tmp->x = a->x;
+	tmp->y = a->y;
+	a->x = b->x;
+	a->y = b->y;
+	b->x = tmp->x;
+	b->y = tmp->y;
+	free(tmp);
+}
+
 void	ft_draw_line(void *mlx, void *win, t_point p1, t_point p2)
 {
 	float	e;
@@ -26,19 +40,39 @@ void	ft_draw_line(void *mlx, void *win, t_point p1, t_point p2)
 	int		pm;
 
 	e = 0;
-	pm = (p2.y > p1.y) ? 1 : 0;
 	f = (p2.y - p1.y) / (p2.x - p1.x);
-	while (p1.x < p2.x)
+	if (f <= 0.5 && f >= -0.5)
 	{
-		mlx_pixel_put(mlx, win, p1.x, p1.y, 0xFFFFFF);
-		e = e + f;
-		while ((pm == 1 && e >= 0.5) || (pm == 0 && e <= -0.5))
+		pm = (p2.y > p1.y) ? 1 : 0;
+		while (p1.x < p2.x)
 		{
-			p1.y = (pm == 1) ? p1.y + 1 : p1.y - 1;
-			e = (pm == 1) ? e - 1 : e + 1;
 			mlx_pixel_put(mlx, win, p1.x, p1.y, 0xFFFFFF);
+			e = e + f;
+			if ((pm == 1 && e >= 0.5) || (pm == 0 && e <= -0.5))
+			{
+				p1.y = (pm == 1) ? p1.y + 1 : p1.y - 1;
+				e = (pm == 1) ? e - 1 : e + 1;
+			}
+			p1.x = p1.x + 1;
 		}
-		p1.x = p1.x + 1;
+	}
+	else
+	{
+		if (p1.y > p2.y)
+			ft_swap_point(&p1, &p2);
+		pm = (p2.x > p1.x) ? 1 : 0;
+		f = (p2.x - p1.x) / (p2.y - p1.y);
+		while (p1.y < p2.y)
+		{
+			mlx_pixel_put(mlx, win, p1.x, p1.y, 0xFFFFFF);
+			e = e + f;
+			if ((pm == 1 && e >= 0.5) || (pm == 0 && e <= -0.5))
+			{
+				p1.x = (pm == 1) ? p1.x + 1 : p1.x - 1;
+				e = (pm == 1) ? e - 1 : e + 1;
+			}
+			p1.y = p1.y + 1;
+		}
 	}
 }
 
@@ -50,6 +84,26 @@ t_coord	*ft_max_point(t_coord max)
 	ret->x = max.x;
 	ret->z = max.z;
 	ret->y = 0;
+	return (ret);
+}
+
+t_coord	*ft_min_point(t_coord max, t_list *map)
+{
+	t_coord	*ret;
+	t_coord	*tmp1;
+	t_list	*tmp;
+
+	tmp = map;
+	ret = malloc(sizeof(t_coord));
+	ret->x = max.x;
+	ret->z = 0;
+	ret->y = max.y;
+	while (tmp)
+	{
+		tmp1 = tmp->content;
+		ret->z = (tmp1->z < ret->z) ? tmp1->z : ret->z;
+		tmp = tmp->next;
+	}
 	return (ret);
 }
 
