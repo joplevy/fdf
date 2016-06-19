@@ -29,7 +29,7 @@ t_point	ft_get_scale(float *scale, t_coord max, t_list *map)
 		*scale = *scale + 1;
 	l.x = (1600 - ft_get_point(maxp, max, *scale, l).x) / 2;
 	l.y = 800 - (800 + ft_get_point(maxp, max, *scale, l).y) / 2\
-	 - (ft_get_point(minp, max, *scale, l).y) / 2;
+	- (ft_get_point(minp, max, *scale, l).y) / 2;
 	return (l);
 }
 

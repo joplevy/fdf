@@ -13,7 +13,7 @@
 NAME = fdf
 CC = gcc
 CFLAG = -c -Wall -Werror -Wextra
-SRC_NAME = main.c read.c draw.c
+SRC_NAME = main.c read.c draw.c calc.c
 OBJ_NAME = $(SRC_NAME:.c=.o)
 LIBFT_PATH = ./libft/
 LIBFT_NAME = libft.a
@@ -25,8 +25,7 @@ $(NAME):
 	@$(MAKE) -C $(LIBFT_PATH)
 	@$(CC) $(CFLAG) $(SRC_NAME)
 	@$(CC) -o $(NAME) $(OBJ_NAME) -L. $(LIBFT_PATH)$(LIBFT_NAME) \
-	-lmlx -L/usr/include/../lib -lXext -lX11 -lm
-	@#-lmlx -framework OpenGL -framework AppKit
+	-lmlx -framework OpenGL -framework AppKit
 
 clean:
 	@$(MAKE) -C $(LIBFT_PATH) clean

@@ -39,6 +39,7 @@ t_list	*ft_get_map(char *input)
 	c.y = 0;
 	c.x = 0;
 	ret = NULL;
+	errno = 0;
 	fd = open(input, O_RDONLY);
 	get_next_line(fd, &line);
 	if (errno != 0)
@@ -83,25 +84,4 @@ t_point	**ft_tab(t_list *map, t_coord max, double scale, t_point l)
 		tmp = tmp->next;
 	}
 	return (ret);
-}
-
-t_coord	ft_get_max(t_list *map)
-{
-	t_coord	max;
-	t_coord	*val;
-	t_list	*tmp;
-
-	tmp = map;
-	max.x = 0;
-	max.y = 0;
-	max.z = 0;
-	while (tmp)
-	{
-		val = tmp->content;
-		max.x = (val->x > max.x) ? val->x : max.x;
-		max.y = (val->y > max.y) ? val->y : max.y;
-		max.z = (val->z > max.z) ? val->z : max.z;
-		tmp = tmp->next;
-	}
-	return (max);
 }
