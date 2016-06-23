@@ -42,7 +42,7 @@ t_list	*ft_get_map(char *input)
 	errno = 0;
 	fd = open(input, O_RDONLY);
 	get_next_line(fd, &line);
-	if (errno != 0)
+	if (errno != 0 || (!line))
 		return (NULL);
 	c.x = ft_get_coord(line, c.y++, &ret, c.x);
 	while (get_next_line(fd, &line) > 0)
